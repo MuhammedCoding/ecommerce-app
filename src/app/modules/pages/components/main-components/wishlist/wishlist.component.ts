@@ -18,11 +18,12 @@ import {
 })
 export class WishlistComponent {
   isLoading: boolean = true;
-  isAddLoading: boolean = false;
+
   products: Product[] = [];
   productsIds: string[] = [];
   isClearLoading: boolean = false;
   loadingProductRemoval: { [productId: string]: boolean } = {};
+  loadingProductADD: { [productId: string]: boolean } = {};
   private productCache: { [productId: string]: Product } = {};
 
   constructor(
@@ -43,11 +44,14 @@ export class WishlistComponent {
   }
 
   addToCart(productId: string) {
-    this.isAddLoading = true;
+    this.loadingProductADD[productId] = true;
+    console.log(this.loadingProductADD[productId]);
+
     this._cartService.addToCart(productId).subscribe({
       next: (response) => {
         this._cartService.cartItemsNum.next(response.numOfCartItems);
-        this.isAddLoading = false;
+        this.loadingProductADD[productId] = false;
+        console.log(this.loadingProductADD[productId]);
         this.toastr.success('Product added to cart successfully!', 'Success', {
           timeOut: 2500,
         });
@@ -55,7 +59,7 @@ export class WishlistComponent {
         this.toastr.toastrConfig.timeOut = 2000;
       },
       error: (err) => {
-        this.isAddLoading = false;
+        this.loadingProductADD[productId] = false;
         console.log(err);
         this.toastr.error('Sorry! something went wrong', 'Major Error', {});
       },

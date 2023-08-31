@@ -32,11 +32,17 @@ export class RegisterComponent {
         email: [null, [Validators.required, Validators.email]],
         password: [
           null,
-          [Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)],
+          [
+            Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])[\x00-\x7F]{8,}$/),
+            Validators.required,
+          ],
         ],
         rePassword: [
           null,
-          [Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)],
+          [
+            Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])[\x00-\x7F]{8,}$/),
+            Validators.required,
+          ],
         ],
         phone: [
           null,
