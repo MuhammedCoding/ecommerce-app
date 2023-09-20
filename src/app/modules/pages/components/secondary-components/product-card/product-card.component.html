@@ -1,7 +1,12 @@
 <div class="card product h-100">
     <div class="card-body">
-        <span class="ms-auto mb-3 wishlist-icon center-elem cursor-pointer" (click)="addToWishList(product.id)">
-            <i class="fa-solid fa-heart"></i>
+        <span class="ms-auto mb-3 wishlist-icon center-elem cursor-pointer" (click)="toggleWishlist(product.id)">
+            <ng-container *ngIf="isInWishlist; else notInWishlist">
+                <i class="fa-solid fa-heart-broken"></i>
+            </ng-container>
+            <ng-template #notInWishlist>
+                <i class="fa-solid fa-heart"></i>
+            </ng-template>
         </span>
         <a [routerLink]="['/pages/productdetails',product.id]">
             <div class="product-img">
