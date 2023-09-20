@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent implements OnInit, OnDestroy {
+export class NavbarComponent implements OnInit {
   cartItemCount: number = 0;
   isCartCountLoading: boolean = true;
 
@@ -16,16 +16,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private _tokenService: TokenService,
     private _cartService: CartService
   ) {}
-  ngOnDestroy(): void {
-    console.log('DESTROYEDD');
-  }
 
   ngOnInit(): void {
-    //this.cartItemCount = 0;
     this._tokenService.userData.subscribe({
       next: () => {
         this._cartService.updateCartItemsNum();
-        console.log('Yesssss');
       },
     });
 

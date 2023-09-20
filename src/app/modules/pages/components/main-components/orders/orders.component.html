@@ -1,1 +1,34 @@
-<p>orders works!</p>
+<app-loader *ngIf="isLoading"></app-loader>
+
+
+<div class="shadow-lg p-5 bg-main-light mx-auto rounded-4" *ngIf="!isLoading" @fadeIn>
+    <h3 class="mb-5">All Orders</h3>
+
+    <div class="order p-5 border-1 border" *ngFor="let order of allOrders">
+        <div class=" order-details">
+            <span class="badge p-2 me-2" [class.bg-success]="order.isDelivered" [class.bg-danger]="!order.isDelivered">
+                {{ order.isDelivered ? 'Delivered' : 'Not Delivered' }}
+            </span>
+            <span class="badge p-2 me-2" [class.bg-success]="order.isPaid" [class.bg-danger]="!order.isPaid">
+                {{ order.isPaid ? 'Paid' : 'Not Paid' }}
+            </span>
+            <span class="badge bg-success p-2 me-2">Paid Via {{order.paymentMethodType}}</span>
+            <span class="badge bg-success p-2 me-2">Created At : {{order.createdAt|date:'medium'}}</span>
+            <p class="h5 my-5">Total Order Price: {{order.totalOrderPrice|currency}}</p>
+        </div>
+        <div *ngFor="let item of order.cartItems let isLast = last" class="row align-items-center py-2 product"
+            [class.border-bottom]="!isLast">
+            <div class="col-md-2">
+                <img class="w-100" [src]="item.product.imageCover" alt="{{item.product.title}}">
+            </div>
+            <div class="col-md-10 d-flex justify-content-between mt-5 mt-md-0 ">
+                <div>
+                    <h6>{{item.product.title}}</h6>
+                    <p class="text-main my-2">Price: {{item.price|currency}}</p>
+                    <p class="text-main my-2">Count: {{item.count}}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

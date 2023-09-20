@@ -8,13 +8,22 @@ import { BehaviorSubject } from 'rxjs';
 export class TokenService {
   constructor() {
     if (localStorage.getItem('userToken') !== null) this.decodeToken();
+    console.log(this.userData);
   }
 
-  userData = new BehaviorSubject(null);
+  userData = new BehaviorSubject<any>(null);
 
   decodeToken() {
     const encodedToken = JSON.stringify(localStorage.getItem('userToken'));
     this.userData.next(jwtDecode(encodedToken));
+  }
+
+  getUserId(): string | null {
+    const user = this.userData.value;
+    if (user) {
+      return user.id;
+    }
+    return null;
   }
 
   logout() {
